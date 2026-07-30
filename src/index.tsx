@@ -27,5 +27,4 @@ const start = async (mode: Mode) => {
 const config = await firstRunSetup();
 process.env.API_ID = config.apiId;
 process.env.API_HASH = config.apiHash;
-process.env.BOT_TOKEN = config.botToken ?? "";
 render(<App onSelect={start} />);
