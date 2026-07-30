@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Text } from "ink";
 import SelectInput from "ink-select-input";
+import type { LoginMode } from "../setup.js";
 
-export type Mode = "token" | "phone";
-export function App({ onSelect }: { onSelect: (mode: Mode) => void }) {
+export function App({ onSelect }: { onSelect: (mode: LoginMode) => void }) {
   const items = [
-    { label: "🤖 Bot token login (numeric-id:token)", value: "token" as const },
-    { label: "📱 Telegram phone number login", value: "phone" as const },
+    { label: "🔑 App credentials (API ID + API hash)", value: "app" as const },
+    { label: "📱 Phone number", value: "phone" as const },
+    { label: "🤖 Bot token (numeric-id:token)", value: "bot" as const },
     { label: "✕ Exit", value: "exit" as const }
   ];
   return <Box flexDirection="column" padding={1}>
