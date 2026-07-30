@@ -6,7 +6,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { CommandRegistry } from "./core/registry.js";
 import { builtins } from "./commands/_builtins.js";
-import { App, type Mode } from "./ui/App.js";
+import { App } from "./ui/App.js";
+import type { LoginMode } from "./setup.js";
 import { connect } from "./telegram.js";
 import { firstRunSetup } from "./setup.js";
 
@@ -16,7 +17,7 @@ console.log(chalk.cyan.bold(`\n ██████╗ ██╗   ██╗█�
 console.log(chalk.gray(" Telegram framework • live commands\n"));
 
 const registry = new CommandRegistry();
-const start = async (mode: Mode) => {
+const start = async (mode: LoginMode) => {
   await registry.loadDirectory(commandsDir);
   for (const command of builtins(() => registry.all())) registry.register(command);
   await connect(mode, registry);
