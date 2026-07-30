@@ -23,7 +23,7 @@ export async function connect(mode: "token" | "phone", registry: CommandRegistry
       phoneNumber: async () => phone,
       phoneCode: async () => input.text("Enter the verification code sent by Telegram: "),
       password: async () => input.text("Two-step verification password (if enabled): "),
-      onError: (error) => { console.error(error); return true; }
+      onError: (error) => { console.error(error); }
     });
   }
   await writeFile(sessionFile, client.session.save(), "utf8");
