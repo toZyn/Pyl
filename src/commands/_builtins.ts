@@ -6,7 +6,7 @@ export function builtins(getCommands: () => PylCommand[]): PylCommand[] {
     await reply(`✨ <b>Pyl</b>\n\n${rows.join("\n\n")}`);
   };
   return [
-    { name: "start", title: "Iniciar", description: "Muestra el menú principal.", aliases: ["help", "menu"], execute: menu },
-    { name: "ping", title: "Ping", description: "Comprueba que Pyl está conectado.", execute: ({ reply }) => reply("🏓 Pong — Pyl está activo.") }
+    { name: "start", title: "Start", description: "Display the main menu.", aliases: ["help", "menu"], execute: menu },
+    { name: "ping", title: "Ping", description: "Check that Pyl is connected.", execute: ({ reply }) => reply("🏓 Pong — Pyl is online.") }
   ];
 }
