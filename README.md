@@ -43,8 +43,8 @@ const command: PylCommand = {
   title: "Greeting",
   description: "Greet the user.",
   aliases: ["hi"],
-  execute: async ({ reply, args }) => {
-    await reply(`Hello ${args.join(" ") || "world"} 👋`);
+  execute: async ({ replyText, args }) => {
+    await replyText(`Hello ${args.join(" ") || "world"} 👋`);
   }
 };
 
