@@ -10,7 +10,7 @@ A Telegram bot and userbot framework with a Chalk banner, an Ink interactive CLI
 - Configuration and the GramJS session are stored locally in `.data/`.
 - `/start`, `/help`, and `/menu` display the available commands.
 - `/ping` is included by default.
-- Add or edit command files in `src/commands/` during development without restarting.
+- Add or edit command files in `src/commands/` during development without restarting. Pyl uses the maintained `teleproto` Telegram client.
 
 > Use phone mode only with your own account and follow Telegram's rules.
 
@@ -60,6 +60,6 @@ src/
 ├── core/            # command types and registry
 ├── ui/              # Ink interactive menu
 ├── setup.ts         # first-run local configuration
-├── index.ts         # CLI and watcher
+├── index.tsx        # CLI and watcher
 └── telegram.ts      # Telegram connection and dispatcher
 ```
