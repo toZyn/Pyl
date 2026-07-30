@@ -20,7 +20,6 @@
     "react": "^18.3.1"
   },
   "devDependencies": {
-    "@types/input": "^1.0.1",
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.12",
     "tsx": "^4.19.2",
