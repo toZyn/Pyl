@@ -5,8 +5,8 @@ import SelectInput from "ink-select-input";
 export type Mode = "token" | "phone";
 export function App({ onSelect }: { onSelect: (mode: Mode) => void }) {
   const items = [
-    { label: "🤖 Connect with a bot token", value: "token" as const },
-    { label: "📱 Connect with a Telegram phone number", value: "phone" as const },
+    { label: "🤖 Bot token login (numeric-id:token)", value: "token" as const },
+    { label: "📱 Telegram phone number login", value: "phone" as const },
     { label: "✕ Exit", value: "exit" as const }
   ];
   return <Box flexDirection="column" padding={1}>
