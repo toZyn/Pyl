@@ -35,7 +35,9 @@ export async function connect(mode: "token" | "phone", registry: CommandRegistry
     const commandName = raw.slice(1).split("@")[0];
     const command = registry.get(commandName);
     if (!command) return;
-    await command.execute({ event, client, args, reply: (replyText: string) => event.message.reply({ message: replyText, parseMode: "html" }) });
+    const reply = (replyText: string) => event.message.reply({ message: replyText, parseMode: "html" });
+    const replyText = async (text: string): Promise<void> => { await reply(text); };
+    await command.execute({ event, client, args, reply, replyText });
   }, new NewMessage({}));
   return client;
 }
