@@ -5,6 +5,7 @@ export type PylContext = {
   client: any;
   args: string[];
   reply: (text: string) => Promise<Api.Message>;
+  replyText: (text: string) => Promise<void>;
 };
 
 export type PylCommand = {
