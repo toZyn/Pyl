@@ -5,7 +5,8 @@ A Telegram bot and userbot framework with a Chalk banner, an Ink interactive CLI
 ## Features
 
 - Interactive first-run setup: API ID, API hash, and connection mode are requested in the terminal.
-- Connect with either a bot token or a Telegram phone number.
+- Choose between bot-token login and Telegram phone-number login.
+- Bot-token login accepts Telegram tokens in the `<numeric-id>:<token>` format, such as `896...:AA...`.
 - Phone mode asks for the Telegram verification code and supports two-step verification.
 - Configuration and the GramJS session are stored locally in `.data/`.
 - `/start`, `/help`, and `/menu` display the available commands.
