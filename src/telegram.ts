@@ -9,25 +9,25 @@ import type { CommandRegistry } from "./core/registry.js";
 export async function connect(mode: "token" | "phone", registry: CommandRegistry) {
   const apiId = Number(process.env.API_ID);
   const apiHash = process.env.API_HASH;
-  if (!apiId || !apiHash) throw new Error("Configura API_ID y API_HASH en .env");
+  if (!apiId || !apiHash) throw new Error("API_ID and API_HASH are required.");
   const sessionFile = process.env.SESSION_FILE ?? ".data/pyl.session";
   await mkdir(path.dirname(sessionFile), { recursive: true });
   const saved = await readFile(sessionFile, "utf8").catch(() => "");
   const client = new TelegramClient(new StringSession(saved), apiId, apiHash, { connectionRetries: 5 });
   if (mode === "token") {
-    if (!process.env.BOT_TOKEN) throw new Error("Falta BOT_TOKEN en .env");
+    if (!process.env.BOT_TOKEN) throw new Error("BOT_TOKEN is required.");
     await client.start({ botAuthToken: process.env.BOT_TOKEN });
   } else {
-    const phone = process.env.PHONE_NUMBER || await input.text("Número de Telegram (+código de país): ");
+    const phone = await input.text("Telegram phone number (+country code): ");
     await client.start({
       phoneNumber: async () => phone,
-      phoneCode: async () => input.text("Código recibido en Telegram: "),
-      password: async () => input.text("Contraseña 2FA (si tienes): "),
+      phoneCode: async () => input.text("Enter the verification code sent by Telegram: "),
+      password: async () => input.text("Two-step verification password (if enabled): "),
       onError: (error) => { console.error(error); return true; }
     });
   }
   await writeFile(sessionFile, client.session.save(), "utf8");
-  console.log(`\n✅ Pyl conectado en modo ${mode}.`);
+  console.log(`\n✅ Pyl connected in ${mode} mode.`);
   client.addEventHandler(async (event: any) => {
     const text = String(event.message?.message ?? "").trim();
     if (!text.startsWith("/")) return;
