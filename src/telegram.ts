@@ -6,7 +6,7 @@ import { NewMessage } from "teleproto/events/index.js";
 import input from "input";
 import type { CommandRegistry } from "./core/registry.js";
 
-export async function connect(mode: "token" | "phone", registry: CommandRegistry) {
+export async function connect(mode: "app" | "phone" | "bot", registry: CommandRegistry) {
   const apiId = Number(process.env.API_ID);
   const apiHash = process.env.API_HASH;
   if (!apiId || !apiHash) throw new Error("API_ID and API_HASH are required.");
@@ -14,11 +14,13 @@ export async function connect(mode: "token" | "phone", registry: CommandRegistry
   await mkdir(path.dirname(sessionFile), { recursive: true });
   const saved = await readFile(sessionFile, "utf8").catch(() => "");
   const client = new TelegramClient(new StringSession(saved), apiId, apiHash, { connectionRetries: 5 });
-  if (mode === "token") {
-    if (!process.env.BOT_TOKEN) throw new Error("BOT_TOKEN is required.");
-    await client.start({ botAuthToken: process.env.BOT_TOKEN });
+  if (mode === "bot") {
+    const botToken = (process.env.BOT_TOKEN || await input.text("Bot token (format: numeric-id:token): ")).trim();
+    if (!/^\d+:[A-Za-z0-9_-]+$/.test(botToken)) throw new Error("Invalid bot token format. Expected numeric-id:token.");
+    await client.start({ botAuthToken: botToken });
   } else {
-    const phone = await input.text("Telegram phone number (+country code): ");
+    const prompt = mode === "app" ? "Phone number for app credentials (+country code): " : "Telegram phone number (+country code): ";
+    const phone = process.env.PHONE_NUMBER || await input.text(prompt);
     await client.start({
       phoneNumber: async () => phone,
       phoneCode: async () => input.text("Enter the verification code sent by Telegram: "),
