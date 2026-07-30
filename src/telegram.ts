@@ -1,9 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { TelegramClient } from "gramjs";
-import { StringSession } from "gramjs/sessions/index.js";
-import { Api } from "gramjs";
-import { NewMessage } from "gramjs/events/index.js";
+import { TelegramClient } from "telegram";
+import { StringSession } from "telegram/sessions/index.js";
+import { NewMessage } from "telegram/events/index.js";
 import input from "input";
 import type { CommandRegistry } from "./core/registry.js";
 
