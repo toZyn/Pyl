@@ -1,67 +1,65 @@
 # Pyl
 
-Framework de Telegram para ejecutar un **bot con token** o un **userbot con número de Telegram**, con una CLI bonita en [Ink](https://github.com/vadimdemedes/ink) y encabezado en [Chalk](https://github.com/chalk/chalk).
+A Telegram bot and userbot framework with a Chalk banner, an Ink interactive CLI, and live command loading.
 
-## Características
+## Features
 
-- Menú inicial interactivo con botones: token o número.
-- Token: conexión directa con `BOT_TOKEN`.
-- Número: solicita el código que Telegram envía a tu cuenta y soporta contraseña 2FA.
-- Guarda la sesión en `.data/pyl.session` para no pedir el código cada vez.
-- `/start`, `/help` y `/menu` muestran el menú de comandos.
-- `/ping` viene incluido.
-- Comandos en vivo: agrega o edita archivos dentro de `src/commands/` (en desarrollo) o `dist/commands/` (producción) sin reiniciar.
-- Cada comando declara su nombre, título, descripción y función.
+- Interactive first-run setup: API ID, API hash, and connection mode are requested in the terminal.
+- Connect with either a bot token or a Telegram phone number.
+- Phone mode asks for the Telegram verification code and supports two-step verification.
+- Configuration and the GramJS session are stored locally in `.data/`.
+- `/start`, `/help`, and `/menu` display the available commands.
+- `/ping` is included by default.
+- Add or edit command files in `src/commands/` during development without restarting.
 
-> Usa el modo número únicamente con tu propia cuenta y respeta las reglas de Telegram.
+> Use phone mode only with your own account and follow Telegram's rules.
 
-## Inicio rápido
+## Quick start
 
 ```bash
 npm install
-cp .env.example .env
-# completa API_ID y API_HASH; luego BOT_TOKEN o PHONE_NUMBER
 npm run dev
 ```
 
-Obtén `API_ID` y `API_HASH` en [my.telegram.org](https://my.telegram.org). Para un bot, crea el token con [@BotFather](https://t.me/BotFather).
+On the first run, Pyl asks for the Telegram API ID, API hash, and whether you want to use a bot token or a phone number. The answers are saved locally so they are not requested again.
 
-Para producción:
+For production:
 
 ```bash
 npm run build
 npm start
 ```
 
-## Crear un comando
+## Create a command
 
-Crea `src/commands/hello.ts`:
+Create `src/commands/hello.ts`:
 
 ```ts
 import type { PylCommand } from "../core/types.js";
 
 const command: PylCommand = {
   name: "hello",
-  title: "Saludo",
-  description: "Saluda al usuario.",
-  aliases: ["hola"],
+  title: "Greeting",
+  description: "Greet the user.",
+  aliases: ["hi"],
   execute: async ({ reply, args }) => {
-    await reply(`Hola ${args.join(" ") || "mundo"} 👋`);
+    await reply(`Hello ${args.join(" ") || "world"} 👋`);
   }
 };
 
 export default command;
 ```
 
-Guárdalo y Pyl lo cargará automáticamente. El menú lo incluirá en la siguiente consulta.
+Save the file and Pyl loads it automatically. It will appear in the next menu request.
 
-## Estructura
+## Structure
 
 ```text
 src/
-├── commands/       # comandos del bot, cargados en vivo
-├── core/           # tipos y registro de comandos
-├── ui/             # menú interactivo de Ink
-├── index.ts        # CLI y watcher
-└── telegram.ts     # conexión GramJS y dispatcher
+├── commands/       # live-loaded commands
+├── core/            # command types and registry
+├── ui/              # Ink interactive menu
+├── setup.ts         # first-run local configuration
+├── index.ts         # CLI and watcher
+└── telegram.ts      # Telegram connection and dispatcher
 ```
