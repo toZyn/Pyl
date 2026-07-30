@@ -1,4 +1,4 @@
-import type { Api } from "gramjs";
+import type { Api } from "telegram";
 
 export type PylContext = {
   event: any;
