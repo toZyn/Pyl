@@ -13,7 +13,7 @@
     "chalk": "^5.4.1",
     "chokidar": "^4.0.3",
     "dotenv": "^16.4.7",
-    "gramjs": "^2.26.21",
+    "telegram": "^2.26.22",
     "ink": "^5.1.0",
     "ink-select-input": "^6.2.0",
     "input": "^1.0.1",
